@@ -19,8 +19,7 @@
 - Saved preprocessor object for reuse
 
 ### Day 4 - Model Training & Tracking
-- Implemented model training module
-- Used Linear Regression for prediction
-- Evaluated model using R² and RMSE
+- Implemented multiple models (Linear Regression, Random Forest)
+- Compared model performance
+- Selected best model based on R² score
 - Integrated MLflow for experiment tracking
-- Logged metrics and model artifacts

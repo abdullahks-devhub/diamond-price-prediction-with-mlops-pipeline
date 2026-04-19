@@ -52,4 +52,4 @@ class DataTransformation:
             pickle.dump(preprocessor, f)
 
         print("Data transformation completed")
-        return (X_train_trf, y_train, X_test_trf, y_test)
+        return (X_train_trf, X_test_trf, y_train, y_test)
