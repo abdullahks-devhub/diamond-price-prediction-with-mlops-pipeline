@@ -1,6 +1,6 @@
 fastapi
 uvicorn
-gradio
+gradio>=5.7.1
 pandas
 numpy
 scikit-learn
@@ -8,4 +8,4 @@ xgboost
 mlflow
 pydantic
 python-dotenv
-huggingface-hub
+huggingface-hub>=0.25.0
