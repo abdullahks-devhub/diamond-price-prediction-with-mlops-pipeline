@@ -1,11 +1,23 @@
+# Virtual environments
+venv/
+.venv/
+mlops_env/
+
+# Artifacts (too large for git)
+artifacts/
+mlruns/
+mlflow.db
+logs/
+
+# Data
+data/
+
+# Python
 __pycache__/
 *.pyc
+*.pyo
+.DS_Store
+.idea/
+
+# Environment
 .env
-.venv
-venv
-.idea
-mlflow.db
-mlrunsmlflow.db
-mlruns/
-artifacts/
-*.pkl

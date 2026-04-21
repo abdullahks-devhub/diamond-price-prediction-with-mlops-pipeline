@@ -1,55 +1,50 @@
 import os
-import sys
-import pandas as pd
 import pickle
-
+import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from src.logger import logger
+from src.config import (PREPROCESSOR_PATH, TARGET_COLUMN,
+                         NUMERICAL_COLS, CATEGORICAL_COLS, ARTIFACTS_DIR)
 
 class DataTransformation:
     def __init__(self):
-        self.preprocessor_path = "artifacts/preprocessor.pkl"
+        self.preprocessor_path = PREPROCESSOR_PATH
 
     def get_preprocessor(self):
-        numerical_cols = ["carat", "depth", "table", "x", "y", "z"]
-        categorical_cols = ["cut", "color", "clarity"]
-
-        num_pipeline = Pipeline([
-            ("scaler", StandardScaler())
-        ])
-
-        cat_pipeline = Pipeline([
-            ("onehot", OneHotEncoder(handle_unknown="ignore"))
-        ])
+        num_pipeline = Pipeline([("scaler", StandardScaler())])
+        cat_pipeline = Pipeline([("onehot", OneHotEncoder(handle_unknown="ignore"))])
 
         preprocessor = ColumnTransformer([
-            ("num", num_pipeline, numerical_cols),
-            ("cat", cat_pipeline, categorical_cols)
+            ("num", num_pipeline, NUMERICAL_COLS),
+            ("cat", cat_pipeline, CATEGORICAL_COLS)
         ])
-
         return preprocessor
 
     def initiate_data_transformation(self, train_path, test_path):
-        print("Starting data transformation")
-        train_df = pd.read_csv(train_path)
-        test_df = pd.read_csv(test_path)
+        logger.info("Starting data transformation")
+        try:
+            train_df = pd.read_csv(train_path)
+            test_df = pd.read_csv(test_path)
 
-        target_column = "price"
-        X_train = train_df.drop(columns=[target_column])
-        y_train = train_df[target_column]
+            X_train = train_df.drop(columns=[TARGET_COLUMN])
+            y_train = train_df[TARGET_COLUMN]
+            X_test = test_df.drop(columns=[TARGET_COLUMN])
+            y_test = test_df[TARGET_COLUMN]
 
-        X_test = test_df.drop(columns=[target_column])
-        y_test = test_df[target_column]
+            preprocessor = self.get_preprocessor()
+            X_train_trf = preprocessor.fit_transform(X_train)
+            X_test_trf = preprocessor.transform(X_test)
 
-        preprocessor = self.get_preprocessor()
-        X_train_trf = preprocessor.fit_transform(X_train)
-        X_test_trf = preprocessor.transform(X_test)
+            os.makedirs(ARTIFACTS_DIR, exist_ok=True)
+            with open(self.preprocessor_path, "wb") as f:
+                pickle.dump(preprocessor, f)
 
-        os.makedirs("artifacts", exist_ok=True)
+            logger.info(f"Preprocessor saved to {self.preprocessor_path}")
+            logger.info("Data transformation completed")
+            return X_train_trf, X_test_trf, y_train, y_test
 
-        with open(self.preprocessor_path, "wb") as f:
-            pickle.dump(preprocessor, f)
-
-        print("Data transformation completed")
-        return (X_train_trf, X_test_trf, y_train, y_test)
+        except Exception as e:
+            logger.error(f"Data transformation failed: {e}")
+            raise e
