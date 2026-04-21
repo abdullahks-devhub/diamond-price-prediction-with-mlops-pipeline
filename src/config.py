@@ -21,3 +21,6 @@ CATEGORICAL_COLS = ["cut", "color", "clarity"]
 
 # MLflow
 MLFLOW_EXPERIMENT_NAME = "diamond-price-prediction"
+
+# Hugging Face
+HF_REPO_ID = "AbdullahKS-Devhub/diamond-price-model"

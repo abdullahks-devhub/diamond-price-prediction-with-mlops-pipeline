@@ -1,13 +1,14 @@
 import pickle
 import pandas as pd
 from pydantic import BaseModel
-
 from fastapi import FastAPI
+from src.config import MODEL_PATH, PREPROCESSOR_PATH
+
 app = FastAPI()
 
-with open("artifacts/model.pkl", "rb") as f:
+with open(MODEL_PATH, "rb") as f:
     model = pickle.load(f)
-with open("artifacts/preprocessor.pkl", "rb") as f:
+with open(PREPROCESSOR_PATH, "rb") as f:
     preprocessor = pickle.load(f)
 
 class DiamondInput(BaseModel):
