@@ -23,3 +23,9 @@
 - Compared model performance
 - Selected best model based on R² score
 - Integrated MLflow for experiment tracking
+
+### Day 5 - Training Pipeline
+- Created end-to-end training pipeline
+- Integrated ingestion, transformation, and training
+- Built single entry point (main.py)
+- Removed manual testing scripts
