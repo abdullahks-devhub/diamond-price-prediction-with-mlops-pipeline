@@ -179,9 +179,9 @@ with gr.Blocks(theme=theme, css=premium_css, title="Diamond Appraiser") as inter
     # Hero Section
     with gr.Row():
         with gr.Column(scale=1):
-            if os.path.exists("hero.png"):
-                gr.Image("hero.png", show_label=False, show_download_button=False, interactive=False, container=False,
-                         elem_id="hero-image")
+            gr.Image(
+                "https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                show_label=False, show_download_button=False, interactive=False, container=False, elem_id="hero-image")
         with gr.Column(scale=2):
             gr.Markdown("""
             # 💎 Precision Diamond Appraisal
