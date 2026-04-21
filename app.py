@@ -6,7 +6,7 @@ from huggingface_hub import hf_hub_download
 from functools import lru_cache
 
 # Constants
-REPO_ID = "AbdullahKS_Devhub/diamond-price-model"
+REPO_ID = "AbdullahKS-Devhub/diamond-price-model"
 
 
 @lru_cache()
